@@ -1,0 +1,71 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+mqtt:
+        broker: 192.168.50.150
+        port: 1883
+        username: mqtt
+        password: 12345666
+        discovery: true
+        discovery_prefix: homeassistant
+
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+
+
+
+homekit: 
+
+
+switch:
+  - platform: mqtt
+    name: "switch"
+    state_topic: "esp/switch1"
+    command_topic: "esp/switch1"
+    payload_on: "ON"
+    payload_off: "OFF"
+
+
+
+light:
+  platform: mqtt
+  name: 'Bed Light'
+  state_topic: 'light/switch'
+  command_topic: 'light/switch'
+  brightness_state_topic: 'light/brightness'
+  brightness_command_topic: 'light/brightness'
+  rgb_state_topic: 'light/rgb'
+  rgb_command_topic: 'light/rgb'
+  brightness_scale: 100
+
+# 温度传感器
+sensor 1:
+  platform: mqtt
+  name: "temperature"
+  device_class: temperature
+  state_topic: "am2320/temperature"
+  unit_of_measurement: "°C"
+
+sensor 2:
+  platform: mqtt
+  name: "humidity"
+  device_class: humidity
+  state_topic: "am2320/humidity"
+  unit_of_measurement: "%"
+
+asuswrt:
+  host: 192.168.50.1
+  username:  admin
+  password: qiumaoshun..
+  protocol: ssh
+
